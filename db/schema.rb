@@ -11,10 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151128132541) do
+ActiveRecord::Schema.define(version: 20151128135420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "taxi_driver_locations", force: :cascade do |t|
+    t.integer  "taxi_driver_id",                         null: false
+    t.decimal  "latitude",       precision: 9, scale: 6, null: false
+    t.decimal  "longitude",      precision: 9, scale: 6, null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+  end
+
+  add_index "taxi_driver_locations", ["taxi_driver_id"], name: "index_taxi_driver_locations_on_taxi_driver_id", using: :btree
 
   create_table "taxi_drivers", force: :cascade do |t|
     t.string   "name",                          null: false
@@ -26,4 +36,5 @@ ActiveRecord::Schema.define(version: 20151128132541) do
 
   add_index "taxi_drivers", ["name"], name: "index_taxi_drivers_on_name", using: :btree
 
+  add_foreign_key "taxi_driver_locations", "taxi_drivers"
 end
