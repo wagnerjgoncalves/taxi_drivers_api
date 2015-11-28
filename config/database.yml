@@ -1,0 +1,20 @@
+default: &default
+  adapter: postgresql
+  encoding: utf-8
+  username: taxi_drivers_api
+  password: taxi_drivers_api
+  pool: 5
+
+development:
+  <<: *default
+  database: taxi_drivers_api_development
+
+test:
+  <<: *default
+  database: taxi_drivers_api_test
+
+production:
+  <<: *default
+  database: taxi_drivers_api_production
+  username: taxi_drivers_api
+  password: <%= ENV['TAXI_DRIVERS_API_DATABASE_PASSWORD'] %>
