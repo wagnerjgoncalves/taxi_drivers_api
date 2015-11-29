@@ -5,7 +5,9 @@ class TaxiDriver < ActiveRecord::Base
 
   delegate :latitude, :longitude, to: :last_location, allow_nil: true
 
+  scope :available, -> { where(available: true) }
+
   def last_location
-    taxi_driver_locations.order("created_at DESC").first
+    taxi_driver_locations.ordered.first
   end
 end

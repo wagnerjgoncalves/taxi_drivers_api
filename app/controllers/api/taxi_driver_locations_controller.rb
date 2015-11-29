@@ -12,6 +12,12 @@ class API::TaxiDriverLocationsController < ApplicationController
     end
   end
 
+  def index
+    @resources = ::TaxiDriverLocationFilter.new.available_by_bbbox(filter_params)
+
+    render json: @resources, root: false
+  end
+
   private
 
   def resource_params
@@ -20,5 +26,9 @@ class API::TaxiDriverLocationsController < ApplicationController
 
   def available_taxi_driver_param
     params.require(:taxi_driver_location).permit(:available).fetch(:available, nil)
+  end
+
+  def filter_params
+    params.permit(:ne, :sw)
   end
 end
