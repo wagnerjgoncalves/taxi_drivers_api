@@ -52,4 +52,33 @@ describe API::TaxiDriverLocationsController do
       end
     end
   end
+
+  describe "GET #index" do
+    let!(:taxi_driver_1) { create(:taxi_driver, available: true) }
+    let!(:taxi_driver_2) { create(:taxi_driver) }
+    let!(:location_1) { create(:taxi_driver_location, taxi_driver: taxi_driver_1) }
+    let!(:location_2) { create(:taxi_driver_location, taxi_driver: taxi_driver_1) }
+    let!(:location_3) { create(:taxi_driver_location, taxi_driver: taxi_driver_1) }
+    let!(:location_1) { create(:taxi_driver_location, taxi_driver: taxi_driver_2) }
+
+    context 'display only available taxi driver' do
+      before do
+        get :index
+      end
+
+      it { expect(response.status).to eq 200 }
+
+      it 'renders json error object' do
+        json = JSON.parse(response.body)
+        location = json.first
+
+        expect(json.size).to eq 1
+
+        expect(location['latitude']).to_not be_nil
+        expect(location['longitude']).to_not be_nil
+        expect(location['taxi_driver_id']).to_not be_nil
+        expect(location['available']).to be true
+      end
+    end
+  end
 end
