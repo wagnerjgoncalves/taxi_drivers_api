@@ -11,6 +11,12 @@ class API::TaxiDriversController < ApplicationController
     end
   end
 
+  def show
+    resource = TaxiDriver.find(params[:id])
+
+    render json: resource, root: false
+  end
+
   private
 
   def resource_params
