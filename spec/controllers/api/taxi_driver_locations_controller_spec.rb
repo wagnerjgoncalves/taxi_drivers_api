@@ -1,6 +1,15 @@
 require 'rails_helper'
 
 describe API::TaxiDriverLocationsController do
+  let!(:token) { APIKey.create(token: APIKey.generate).token }
+  let!(:authorization) do
+    ActionController::HttpAuthentication::Token.encode_credentials(token)
+  end
+
+  before do
+    request.env['HTTP_AUTHORIZATION'] = authorization
+  end
+
   describe 'POST #create' do
     let!(:taxi_driver) { create(:taxi_driver) }
 
@@ -42,7 +51,7 @@ describe API::TaxiDriverLocationsController do
 
         expect(json['latitude']).to include "can't be blank"
         expect(json['longitude']).to include "can't be blank"
-        expect(json['taxi_driver']).to include "can't be blank"
+        expect(json['taxi_driver_id']).to include "can't be blank"
       end
 
       it do "sould not update available attribute at taxi driver"

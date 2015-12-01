@@ -1,6 +1,15 @@
 require 'rails_helper'
 
 describe API::TaxiDriversController do
+  let!(:token) { APIKey.create(token: APIKey.generate).token }
+  let!(:authorization) do
+    ActionController::HttpAuthentication::Token.encode_credentials(token)
+  end
+
+  before do
+    request.env['HTTP_AUTHORIZATION'] = authorization
+  end
+
   describe 'POST #create' do
     context 'success' do
       let!(:params) { attributes_for(:taxi_driver) }
