@@ -28,17 +28,28 @@ API to manage geographical information about taxi drivers and their locations.
 		
 ## Endpoints
 
+The API provides authentication based in Token. To get the token access use:
+	
+	APIKey.last.token
+
 ### taxi drivers 
+
 * To create a taxi driver use:
 	
 		POST /api/taxi_drivers
 		
 		Parameters:
-		taxi_driver_id, latitude, longitude and available
+		name, license_plate and available
+		
+		Ex:
+		curl -XPOST -H "Authorization: Token token=TOKEN" -d "taxi_driver[name]=Sample" -d "taxi_driver[license_plate]=HGD-8743" -d "taxi_driver[available]=true" http://localhost:3000/api/taxi_drivers
 
 * To recover information abou a taxi driver use:
 
 		GET  /api/taxi_drivers/:id
+		
+		Ex:
+		curl -H "Authorization: Token token=KEY" http://localhost:3000/api/taxi_drivers/1
 		
 ### taxi driver locations
 * To recover taxi driver locations use:
@@ -49,12 +60,18 @@ API to manage geographical information about taxi drivers and their locations.
 		sw=latitude,longitude    Ex: sw=-23.612474,-46.702746
 		ne=latitude,longitude    Ex: ne=-23.589548,-46.673392
 		
+		Ex:
+		curl -H "Authorization: Token token=KEY" http://localhost:3000/api/taxi_driver_locations?sw=-23.612474,-46.702746&ne=-23.589548,-46.673392
+		
 * To create a new taxi driver location use:
 		
 		POST /api/taxi_driver_locations
 		
 		Parameters:
-		name, license_plate and available
+		taxi_driver_id, latitude, longitude and available
+		
+		Ex:
+		curl -XPOST -H "Authorization: Token token=TOKEN" -d "taxi_driver_location[taxi_driver_id]=1" -d "taxi_driver_location[latitude]=-23.572952" -d "taxi_driver_location[longitude]=-46.635125" -d "taxi_driver_location[available]=true" http://localhost:3000/api/taxi_driver_locations
 
 ### Search location by sw and ne
 
