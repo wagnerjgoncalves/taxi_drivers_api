@@ -6,7 +6,7 @@ describe TaxiDriverLocation do
   end
 
   describe 'validations' do
-    it { should validate_presence_of :taxi_driver }
+    it { should validate_presence_of :taxi_driver_id }
     it { should validate_presence_of :latitude }
     it { should validate_presence_of :longitude }
   end

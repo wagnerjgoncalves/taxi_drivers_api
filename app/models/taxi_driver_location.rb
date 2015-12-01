@@ -1,7 +1,7 @@
 class TaxiDriverLocation < ActiveRecord::Base
   belongs_to :taxi_driver
 
-  validates :taxi_driver, :latitude, :longitude, presence: true
+  validates :taxi_driver_id, :latitude, :longitude, presence: true
 
   delegate :available, to: :taxi_driver
 

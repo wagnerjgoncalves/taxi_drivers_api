@@ -19,3 +19,5 @@ TaxiDriverLocation.create(latitude: -23.60925506, longitude: -46.69390415, taxi_
 
 rosana = TaxiDriver.create(name: 'Rosana', license_plate: 'RAS-9876', available: true)
 TaxiDriverLocation.create(latitude: -23.599871666666665, longitude: -46.680903333333326, taxi_driver_id: rosana.id)
+
+APIKey.create(token: APIKey.generate)
